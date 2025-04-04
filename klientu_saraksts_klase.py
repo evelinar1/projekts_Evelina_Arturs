@@ -32,6 +32,17 @@ class Klientu_saraksts():
             pass
 
 
+
+termins = "02-04-2026"
+formats = "%d-%m-%Y"
+
+termins = datetime.strptime(termins, formats)
+if termins <= datetime.now():
+    print("Datums ir mazāks")
+else:
+    print("datums ir lielāks")
+
+
 klientu_saraskts = Klientu_saraksts()
 klientu_saraskts.panem_no()
 
