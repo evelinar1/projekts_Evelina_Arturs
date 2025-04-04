@@ -82,6 +82,5 @@ class Parbaude():
 
 
 
-klients = Parbaude(12345,'Rihards Krūmiņš','12.12.23','nav derīgs')
-
-klients.parbaudit()
+#klients = Parbaude(12345,'Rihards Krūmiņš','12.12.23','nav derīgs')
+#klients.parbaudit()
