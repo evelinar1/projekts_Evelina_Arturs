@@ -13,18 +13,22 @@ class Parbaude():
         klientu_saraksts = [12345]
         while True:
             try:
-                
                 kods = int(input("Ievadiet klienta 5 ciparu kodu: "))
+                # Pievienot koda garuma pārbaudi
                 if kods not in klientu_saraksts: # Pārbauda vai klients eksistē
-                    turpinat = input("Klients nav pierakstīts.\nVai vēlajties pierakstīt klientu? (J/N): ") 
-                    if turpinat == 'J': # Ja neeksistējošs klients vēlas iegūt abonementu:
-                        self.klients = input("Jaunais klients (vārds un uzvārds):")
-                        print('')
-                    elif turpinat == 'N': # Nevēlas iegūt abonementu:
-                        break
-                    else:
-                        print("Ievadiet atbilstošu vērtību!") # Ierakstīta neatbilstoša vērtība
-                        
+                    print('Klients nav pierakstīts.')
+                    while True:
+                        turpinat = input("Vai vēlajties pierakstīt klientu? (J/N): ") 
+                        if turpinat == 'J': # Ja neeksistējošs klients vēlas iegūt abonementu:
+                            self.klients = input("Jaunais klients (vārds un uzvārds):")
+                            print(f'Jaunais klients: {self.klients} ir pievienots, abonements termiņš: {self.termins}, kods: {self.kods}')
+                        elif turpinat == 'N': # Nevēlas iegūt abonementu:
+                            break
+                        else:
+                            print("Ievadiet atbilstošu vērtību!") # Ierakstīta neatbilstoša vērtība
+                        continue
+                    break
+                         
                 else: # Ja klients ir sarakstā
                     if self.abonements == 'derīgs':
                         print(f"{self.klients} ir abonements termiņš: {self.termins}.") # Ja klienta termiņš ir derīgs, paziņo
@@ -82,5 +86,5 @@ class Parbaude():
 
 
 
-#klients = Parbaude(12345,'Rihards Krūmiņš','12.12.23','nav derīgs')
-#klients.parbaudit()
+klients = Parbaude(12345,'Rihards Krūmiņš','12.12.23','nav derīgs')
+klients.parbaudit()
