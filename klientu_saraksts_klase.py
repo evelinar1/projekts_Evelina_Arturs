@@ -34,6 +34,11 @@ class Klientu_saraksts():
 
 klientu_saraskts = Klientu_saraksts()
 klientu_saraskts.panem_no()
+
+
+
+
+#izveles sākums
 while True:
     print("Lūdzu ievadiet savu izvēli (1-4):")
     print("1 - Pierakstīt jaunu klientu")
