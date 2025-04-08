@@ -33,17 +33,14 @@ class Klientu_saraksts():
 
 # Klase "Parbaude", kas manto no klases "Klientu_saraksts"
 class Parbaude(Klientu_saraksts):
-    def __init__(self,kods, klients,termins,klientu_saraksts):
+    def __init__(self,klientu_saraksts):
         super().__init__(klientu_saraksts)
-        self.klients = klients
-        self.termins = termins
-        self.kods = kods
+        
 
 # FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt
     def parbaudit(self):
-        self.klientu_saraksts = 'Klientu_saraksts.txt'
-        with open (self.klientu_saraksts,'r',encoding='utf8') as fails:
-            while True:
+        
+        while True:
                 try:
                     kods = input("Ievadiet klienta 5 ciparu kodu: ")
                     num = int(kods)
@@ -57,7 +54,17 @@ class Parbaude(Klientu_saraksts):
                         while True:
                             turpinat = input("Vai vēlieties pierakstīt klientu? (J/N): ") 
                             if turpinat == 'J': # Ja neeksistējošs klients vēlas iegūt abonementu:
-                                self.klients = input("Jaunais klients (vārds un uzvārds):")
+                                klients = input("Jaunais klients (vārds un uzvārds):")
+                                while True: #izmantotjot random izveido skaitli starp 10000 un 99999 un salīdzina vai tāds jau nav vārdnīcā
+                                    kods = random.randint(10000,99999)
+                                    if kods not in self.klientu_saraksts.items():
+                                        break
+                                    else:
+                                        continue
+                                termins = datetime.now() #paņem tagadējo datumu
+                                termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
+                                termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
+                                self.klientu_saraksts.update({klients:[kods,termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
                                 print(f'Jaunais klients: {self.klients} ir pievienots, abonements termiņš: {self.termins}, kods: {self.kods}')
                             elif turpinat == 'N': # Nevēlas iegūt abonementu:
                                 break
@@ -67,7 +74,7 @@ class Parbaude(Klientu_saraksts):
                         break
                                 
                     else: # Ja klients ir sarakstā
-                        if self.abonements == 'derīgs':
+                        if
                             print(f"{self.klients} ir abonements termiņš: {self.termins}.") # Ja klienta termiņš ir derīgs, paziņo
                         elif self.abonements == 'nav derīgs':
                                 # Paziņo, ka abonements beidzies, dod opciju pagarināt to
@@ -123,5 +130,5 @@ class Parbaude(Klientu_saraksts):
 
 
 
-klients = Parbaude(73343,'Rihards Krūmiņš','02-04-2026','Klientu_saraksts.txt')
+klients = Parbaude(73343,'Rihards Krūmiņš','02-04-2026',)
 klients.parbaudit()
