@@ -34,8 +34,8 @@ class Klientu_saraksts():
 # Klase "Parbaude", kas manto no klases "Klientu_saraksts"
 class Parbaude(Klientu_saraksts):
     
-    def __init__(self,kods, klients,termins,abonements):
-        #super().__init__(kods, klients)
+    def __init__(self,kods, klients,termins,abonements,klientu_saraksts):
+        super().__init__(klientu_saraksts)
         self.klients = klients
         self.kods = kods
         self.termins = termins
