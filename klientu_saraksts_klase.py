@@ -68,7 +68,7 @@ while True:
     if izvele == 2:
         kods=input("Ievadiet klienta 5 ciparu kodu:")
         if kods not in klientu_saraskts.klientu_saraksts:
-            print("Klients nav abonements.")
+            print("Klientam nav abonements.")
             while True:
                 j_vai_n = input("Vai klients vēlās pierakstīties(J/N):")
                 if j_vai_n == "J":
