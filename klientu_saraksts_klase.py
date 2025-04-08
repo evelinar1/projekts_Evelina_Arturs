@@ -5,7 +5,7 @@ class Klientu_saraksts():
     def __init__(self): #inicializē vārdnīcu klientu_saraksts
         self.klientu_saraksts={}
     def pierakstit(self): #pieraksta klientu abonementu sarakstam
-        klients = input("Ievadiet klienta vārdu (Vārds Uzvārds): ")
+        klients = input("Jaunā klienta vārds un uzvārds (Vārds Uzvārds): ")
         while True: #izmantotjot random izveido skaitli starp 10000 un 99999 un salīdzina vai tāds jau nav vārdnīcā
             kods = random.randint(10000,99999)
             if kods not in self.klientu_saraksts.items():
@@ -16,7 +16,7 @@ class Klientu_saraksts():
         termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
         termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
         self.klientu_saraksts.update({klients:[kods,termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
-        print(f"{klients} ir pierakstīts abonementam\nkods: {kods}\ntermins līdz: {termins}")
+        print(f"Jaunais klients {klients} ir pievienots, tā abonementa termiņs ir līdz {termins} un tā kods {kods}.")
     def saglabat_faila(self): #saglabā failā
         with open('Klientu_saraksts.txt','w',encoding='utf8') as fails:
             for klients, vertiba in self.klientu_saraksts.items():
@@ -60,6 +60,7 @@ while True:
     if izvele >=1 and izvele <=4:
         pass
     else:
+        print("Izvele ir starp 1-4")
         continue
     if izvele == 1:
         klientu_saraskts.pierakstit()
@@ -67,7 +68,7 @@ while True:
     if izvele == 2:
         kods=input("Ievadiet klienta 5 ciparu kodu:")
         if kods not in klientu_saraskts.klientu_saraksts:
-            print("Klientam nav sarakstā.")
+            print("Klientam nav abonements.")
             while True:
                 j_vai_n = input("Vai klients vēlās pierakstīties(J/N):")
                 if j_vai_n == "J":
