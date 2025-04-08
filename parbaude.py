@@ -33,27 +33,26 @@ class Klientu_saraksts():
 
 # Klase "Parbaude", kas manto no klases "Klientu_saraksts"
 class Parbaude(Klientu_saraksts):
-    
-    def __init__(self,kods, klients,termins,abonements):
-        #super().__init__(kods, klients)
+    def __init__(self,kods, klients,termins,klientu_saraksts):
+        super().__init__(klientu_saraksts)
         self.klients = klients
-        self.kods = kods
         self.termins = termins
-        self.abonements = abonements
+        self.kods = kods
 
 # FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt
     def parbaudit(self):
-        klientu_saraksts = ''
-        while True:
-            try:
-                kods = input("Ievadiet klienta 5 ciparu kodu: ")
-                num = int(kods)
-                if not len(kods) == 5:
-                    print("Ievadiet 5 ciparu garu kodu!")
-                    continue
-                else:
-                    # Pievienot koda garuma pārbaudi
-                    if kods not in klientu_saraksts: # Pārbauda vai klients eksistē
+        self.klientu_saraksts = 'Klientu_saraksts.txt'
+        with open (self.klientu_saraksts,'r',encoding='utf8') as fails:
+            while True:
+                try:
+                    kods = input("Ievadiet klienta 5 ciparu kodu: ")
+                    num = int(kods)
+                    if not len(kods) == 5:
+                        print("Ievadiet 5 ciparu garu kodu!")
+                        continue
+                
+                        # Pievienot koda garuma pārbaudi
+                    if kods not in self.klientu_saraksts: # Pārbauda vai klients eksistē
                         print('Klients nav pierakstīts.')
                         while True:
                             turpinat = input("Vai vēlieties pierakstīt klientu? (J/N): ") 
@@ -66,21 +65,21 @@ class Parbaude(Klientu_saraksts):
                                 print("Ievadiet atbilstošu vērtību!") # Ierakstīta neatbilstoša vērtība
                             continue
                         break
-                            
+                                
                     else: # Ja klients ir sarakstā
                         if self.abonements == 'derīgs':
                             print(f"{self.klients} ir abonements termiņš: {self.termins}.") # Ja klienta termiņš ir derīgs, paziņo
                         elif self.abonements == 'nav derīgs':
-                            # Paziņo, ka abonements beidzies, dod opciju pagarināt to
+                                # Paziņo, ka abonements beidzies, dod opciju pagarināt to
                             atjaunot = input(f"{self.klients} abonements ir beidzies.\nVai vēlaties atjaunot abonementu? (J/N):")
                             if atjaunot == 'J': # Abonementa pagarināšana
-                                #
+                                    
                                 print(f"Klienta {self.klients} abonements tika pagarināts līdz {self.termins}.")
                             elif atjaunot == 'N': # Abonements netiek pagarināts - programma beidzas
-                                break
-            except ValueError: # Kļūdu pārbaude
-                print("Ievadiet atbilstošu vērtību!")
-                continue
+                                 break
+                except ValueError: # Kļūdu pārbaude
+                    print("Ievadiet atbilstošu vērtību!")
+                    continue
 
 #FUNKCIJA ATJAUNOT - atjauno eksitējoša klienta abonementu, ja klients neeksiste, dod iespēju pievienot un iedod jaunā klienta kodu
     def atjaunot(self,jauns_kods):
@@ -124,5 +123,5 @@ class Parbaude(Klientu_saraksts):
 
 
 
-klients = Parbaude(12345,'Rihards Krūmiņš','12.12.23','nav derīgs')
+klients = Parbaude(73343,'Rihards Krūmiņš','02-04-2026','Klientu_saraksts.txt')
 klients.parbaudit()
