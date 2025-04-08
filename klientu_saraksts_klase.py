@@ -60,6 +60,7 @@ while True:
     if izvele >=1 and izvele <=4:
         pass
     else:
+        print("Izvele ir starp 1-4")
         continue
     if izvele == 1:
         klientu_saraskts.pierakstit()
