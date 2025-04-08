@@ -15,19 +15,19 @@ class Klientu_saraksts():
         termins = datetime.now() #paņem tagadējo datumu
         termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
         termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
-        self.klientu_saraksts.update({klients:[kods,termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
+        self.klientu_saraksts.update({kods:[klients,termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
         print(f"{klients} ir pierakstīts abonementam\nkods: {kods}\ntermins līdz: {termins}")
     def saglabat_faila(self): #saglabā failā
         with open('Klientu_saraksts.txt','w',encoding='utf8') as fails:
-            for klients, vertiba in self.klientu_saraksts.items():
-                fails.write(f'{klients}:{vertiba[0]},{vertiba[1]}\n')
+            for kods, vertiba in self.klientu_saraksts.items():
+                fails.write(f'{kods}:{vertiba[0]},{vertiba[1]}\n')
     def panem_no(self):#nolasa no faila
         try:#lai neizmet error ja nav faila
             with open('Klientu_saraksts.txt','r',encoding='utf8') as fails:
                 for rinda in fails:
-                    klients,vertiba = rinda.strip().split(':')
-                    kods,termins = vertiba.strip().split(',')
-                    self.klientu_saraksts[klients]=[kods,termins]
+                    kods,vertiba = rinda.strip().split(':')
+                    klients,termins = vertiba.strip().split(',')
+                    self.klientu_saraksts[kods]=[klients,termins]
         except FileNotFoundError:
             pass
 
@@ -107,14 +107,13 @@ class Parbaude(Klientu_saraksts):
 
 #FUNKCIJA ATCELT - atceļ eksistējoša klienta abonementu
     def atcelt(self):
-        klientu_saraksts = []
         while True:
             try:
                 kods = int(input("Ievadiet klienta 5 ciparu kodu: "))
-                if kods not in klientu_saraksts:
+                if kods not in self.klientu_saraksts:
                     print("Klients netika atrasts.") 
-                elif kods in klientu_saraksts:
-                    #
+                elif kods in self.klientu_saraksts:
+                    self.klientu_saraksts.pop(self.klientu_saraksts[kods]) #izdzēš 
                     print(f"Klienta {self.klients} abonements ir atcelts.") # Ja klients eksistē, pēc koda ievadīšanas tiek atcelts abonemetnts
                     break
             except ValueError:
