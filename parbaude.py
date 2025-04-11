@@ -89,13 +89,11 @@ class Parbaude(Klientu_saraksts):
                     continue
 
 #FUNKCIJA ATJAUNOT - atjauno eksitējoša klienta abonementu, ja klients neeksiste, dod iespēju pievienot un iedod jaunā klienta kodu
-    def atjaunot(self,jauns_kods):
-        klientu_saraksts = []
-        self.jauns_kods = jauns_kods
+    def atjaunot(self):
         while True:
             try:
                 kods = int(input("Ievadiet klienta 5 ciparu kodu: "))
-                if kods not in klientu_saraksts:
+                if kods not in self.klientu_saraksts:
                     turpinat = input("Klientam nav amonements.\nVai vēlajties pierakstīties abonementam? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
                     if turpinat == 'J':
                         self.jaunais_klients = input("Jaunais klients (vārds un uzvārds):") # Ja vēlas abonementu:
