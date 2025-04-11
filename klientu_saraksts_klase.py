@@ -25,11 +25,14 @@ class Klientu_saraksts():
         try:#lai neizmet error ja nav faila
             with open('Klientu_saraksts.txt','r',encoding='utf8') as fails:
                 for rinda in fails:
-                    klients,vertiba = rinda.strip().split(':')
-                    kods,termins = vertiba.strip().split(',')
-                    self.klientu_saraksts[klients]=[kods,termins]
+                    kods,vertiba = rinda.strip().split(':')
+                    klients,termins = vertiba.strip().split(',')
+                    self.klientu_saraksts[kods]=[klients,termins]
         except FileNotFoundError:
             pass
+        kods = "73343"
+        termins = self.klientu_saraksts[kods][1]
+        print(termins)
 
 
 
