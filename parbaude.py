@@ -39,7 +39,7 @@ class Parbaude(Klientu_saraksts):
         self.klientu_saraksts=klientu_saraksts
         
 
-# FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt
+# FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt, vai pierakstīt klientu
     def parbaudit(self):
         while True:
                 try:
@@ -52,6 +52,8 @@ class Parbaude(Klientu_saraksts):
                         if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
                             print("Kods netika atrasts ievadiet vēlreiz")
                             continue
+                        elif kods in self.klientu_saraksts:
+                            break
                     if kods not in self.klientu_saraksts:
                         J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
                         if J_N == 'J':
