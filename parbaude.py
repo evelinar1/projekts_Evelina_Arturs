@@ -41,17 +41,25 @@ class Parbaude(Klientu_saraksts):
 
 # FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt
     def parbaudit(self):
-        
         while True:
                 try:
-                    kods = input("Ievadiet klienta 5 ciparu kodu: ")
-                    num = int(kods)
-                    if not len(kods) == 5:
-                        print("Ievadiet 5 ciparu garu kodu!")
-                        continue
-                
-                        # Pievienot koda garuma pārbaudi
-                    if kods not in self.klientu_saraksts: # Pārbauda vai klients eksistē
+                    for i in range(0,2):
+                        kods = input("Ievadiet klienta 5 ciparu kodu: ")
+                        num = int(kods)
+                        if not len(kods) == 5:# Pievienot koda garuma pārbaudi
+                            print("Ievadiet 5 ciparu garu kodu!")
+                            continue
+                        if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
+                            print("Kods netika atrasts ievadiet vēlreiz")
+                            continue
+                    if kods not in self.klientu_saraksts:
+                        J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                        if J_N == 'J':
+                            pass
+                        elif J_N =="N":
+                            print("Lūdzu ievadiet vēlreiz uzmanīgāk")
+                            continue
+                    if kods not in self.klientu_saraksts: 
                         print('Klients nav pierakstīts.')
                         while True:
                             turpinat = input("Vai vēlieties pierakstīt klientu? (J/N): ") 
@@ -95,7 +103,21 @@ class Parbaude(Klientu_saraksts):
 #FUNKCIJA ATJAUNOT - atjauno eksitējoša klienta abonementu, ja klients neeksiste, dod iespēju pievienot un iedod jaunā klienta kodu
     def atjaunot(self):
         while True:
-            kods = input("Ievadiet klienta 5 ciparu kodu: ")
+            for i in range(0,2):
+                kods = input("Ievadiet klienta 5 ciparu kodu: ")
+                if not len(kods) == 5:# Pievienot koda garuma pārbaudi
+                    print("Ievadiet 5 ciparu garu kodu!")
+                    continue
+                if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
+                    print("Kods netika atrasts ievadiet vēlreiz")
+                    continue
+            if kods not in self.klientu_saraksts:
+                J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                if J_N == 'J':
+                    pass
+                elif J_N =="N":
+                    print("Lūdzu ievadiet vēlreiz uzmanīgāk")
+                    continue
             if kods not in self.klientu_saraksts:
                 turpinat = input("Klientam nav abonements.\nVai vēlaties pierakstīties abonementam? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
                 if turpinat == 'J':
@@ -114,12 +136,26 @@ class Parbaude(Klientu_saraksts):
                 print("*******************************************************")
                 break
 
-
 #FUNKCIJA ATCELT - atceļ eksistējoša klienta abonementu
     def atcelt(self):
         while True:
             try:
-                kods = input("Ievadiet klienta 5 ciparu kodu: ")
+                for i in range(0,2):
+                    kods = input("Ievadiet klienta 5 ciparu kodu: ")
+                    num = int(kods)
+                    if not len(kods) == 5:# Pievienot koda garuma pārbaudi
+                        print("Ievadiet 5 ciparu garu kodu!")
+                        continue
+                    if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
+                        print("Kods netika atrasts ievadiet vēlreiz")
+                        continue
+                if kods not in self.klientu_saraksts:
+                    J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                    if J_N == 'J':
+                        pass
+                    elif J_N =="N":
+                        print("Lūdzu ievadiet vēlreiz uzmanīgāk")
+                        continue
                 if kods not in self.klientu_saraksts:
                     print("Klientam nav abonements.")
                     print("*******************************************************")
@@ -133,9 +169,7 @@ class Parbaude(Klientu_saraksts):
                     break
             except ValueError:
                 print("Ievadiet atbilstošu vērtību!")
-
-
-
+                continue
 while True:
     klientu_saraksts = Klientu_saraksts()
     klientu_saraksts.panem_no()
