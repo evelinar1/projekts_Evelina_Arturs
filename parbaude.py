@@ -17,7 +17,7 @@ class Klientu_saraksts():
         termins = datetime.now() #paņem tagadējo datumu
         termins = termins + timedelta(days=day*years) #pievieno datumam 1 gadu
         termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
-        self.klientu_saraksts.update({kods:[klients,termins]}) #pievieno kods kā atslēgu un [klients,termins] ka vērtību
+        self.klientu_saraksts.update({kods:[klients,termins]}) #pievieno kodu kā atslēgu un [klients,termins] ka vērtību
         print(f"{klients} ir pierakstīts abonementam\nkods: {kods}\ntermins līdz: {termins}")
         print("*******************************************************")
         return kods
@@ -140,7 +140,7 @@ class Parbaude(Klientu_saraksts):
                 termins = datetime.now() #paņem tagadējo datumu
                 termins = termins + timedelta(days=day*years) #pievieno datumam 1 gadu
                 termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
-                self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
+                self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]}) #pievieno kodu kā atslēgu un [klients,termins] ka vērtību
                 self.saglabat_faila()
                 print(f"Klienta {self.klientu_saraksts[kods][0]} abonements ir atjaunots, derīguma termiņš: {self.klientu_saraksts[kods][1]}.") # Pagarina klienta abonementu
                 print("*******************************************************")
