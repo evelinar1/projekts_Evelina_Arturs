@@ -26,10 +26,10 @@ class Klientu_saraksts():
     def panem_no(self):#nolasa no faila
         try:#lai neizmet error ja nav faila
             with open('Klientu_saraksts.txt','r',encoding='utf8') as fails:
-                for rinda in fails:
-                    kods,vertiba = rinda.strip().split(':')
-                    klients,termins = vertiba.strip().split(',')
-                    self.klientu_saraksts[kods]=[klients,termins]
+                for rinda in fails: #katru faila rindu split ar :
+                    kods,vertiba = rinda.strip().split(':') #iegūst kodu kā key un vērtību kas satur klientu vārdu uzvārdu un termiņu
+                    klients,termins = vertiba.strip().split(',')#split ar , un sadala klienta vārdu un uzvārdu un termiņu
+                    self.klientu_saraksts[kods]=[klients,termins] #iliek vārdnīcā
         except FileNotFoundError:
             pass
 
@@ -43,10 +43,10 @@ class Parbaude(Klientu_saraksts):
     def parbaudit(self):
         while True:
                 try:
-                    for i in range(0,2):
+                    for i in range(0,2): #atļauj ievadīt vēlreiz ja nav sarakstā, ja piem. ievada nepareizi
                         kods = input("Ievadiet klienta 5 ciparu kodu: ")
                         num = int(kods)
-                        if not len(kods) == 5:# Pievienot koda garuma pārbaudi
+                        if not len(kods) == 5:#koda garuma pārbaude
                             print("Ievadiet 5 ciparu garu kodu!")
                             continue
                         if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
@@ -54,7 +54,7 @@ class Parbaude(Klientu_saraksts):
                             continue
                         elif kods in self.klientu_saraksts:
                             break
-                    if kods not in self.klientu_saraksts:
+                    if kods not in self.klientu_saraksts: # pajautā vai Gundega ir pārlicināta ka ievada kodu pareizi
                         J_N = input(f"Koda nav sarakstā vai esat pārliecināts, ka šis:{kods} ir kods ir pareizais: ")
                         if J_N == 'J':
                             pass
@@ -63,7 +63,7 @@ class Parbaude(Klientu_saraksts):
                             continue
                     if kods not in self.klientu_saraksts: 
                         print('Klients nav pierakstīts.')
-                        while True:
+                        while True: #ļauj izveidot jaunu klientu izmantojot pierakstit() un tad saglabā failā
                             turpinat = input("Vai klients vēlās pierakstīties? (J/N): ") 
                             if turpinat == 'J': # Ja neeksistējošs klients vēlas iegūt abonementu:
                                 self.pierakstit()
@@ -79,15 +79,15 @@ class Parbaude(Klientu_saraksts):
                     else: # Ja klients ir sarakstā
                         termins = self.klientu_saraksts[kods][1]
                         formats = "%d-%m-%Y"
-                        termins = datetime.strptime(termins, formats)
-                        if termins <= datetime.now():
+                        termins = datetime.strptime(termins, formats) #pārveido terminu uz datetime objektu
+                        if termins <= datetime.now(): #pārbauda termiņu
                                 # Paziņo, ka abonements beidzies, dod opciju pagarināt to
                             atjaunot = input(f"{self.klientu_saraksts[kods][0]} abonements ir beidzies.\nVai vēlaties atjaunot abonementu? (J/N):")
                             if atjaunot == 'J': # Abonementa pagarināšana
                                 termins = datetime.now() #paņem tagadējo datumu
                                 termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
                                 termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
-                                self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]})
+                                self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]}) #update dict ar jauno terminu
                                 self.saglabat_faila()
                                 print(f"Klienta {self.klientu_saraksts[kods][0]} abonements tika pagarināts līdz {self.klientu_saraksts[kods][1]}.")
                                 print("*******************************************************")
@@ -102,7 +102,7 @@ class Parbaude(Klientu_saraksts):
                     print("Ievadiet atbilstošu vērtību!")
                     continue
 
-#FUNKCIJA ATJAUNOT - atjauno eksitējoša klienta abonementu, ja klients neeksiste, dod iespēju pievienot un iedod jaunā klienta kodu
+#FUNKCIJA ATJAUNOT - atjauno eksitējoša klienta abonementu, ja klients neeksiste, dod iespēju pievienot
     def atjaunot(self):
         while True:
             for i in range(0,2):
@@ -122,7 +122,7 @@ class Parbaude(Klientu_saraksts):
                 elif J_N =="N":
                     print("Lūdzu ievadiet vēlreiz uzmanīgāk")
                     continue
-            if kods not in self.klientu_saraksts:
+            if kods not in self.klientu_saraksts: #ļauj piwerakstī klientu
                 turpinat = input("Klientam nav abonements.\nVai klients vēlās pierakstīties? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
                 if turpinat == 'J':
                     kods = self.pierakstit()
@@ -162,11 +162,11 @@ class Parbaude(Klientu_saraksts):
                     elif J_N =="N":
                         print("Lūdzu ievadiet vēlreiz uzmanīgāk")
                         continue
-                if kods not in self.klientu_saraksts:
+                if kods not in self.klientu_saraksts: #ja klientam nav abonements
                     print("Klientam nav abonements.")
                     print("*******************************************************")
                     break
-                elif kods in self.klientu_saraksts:
+                elif kods in self.klientu_saraksts: #izdzēš klientu izmantojot pop()
                     klients = self.klientu_saraksts[kods][0]
                     self.klientu_saraksts.pop(kods)
                     self.saglabat_faila()
@@ -176,10 +176,10 @@ class Parbaude(Klientu_saraksts):
             except ValueError:
                 print("Ievadiet atbilstošu vērtību!")
                 continue
-while True:
-    klientu_saraksts = Klientu_saraksts()
-    klientu_saraksts.panem_no()
-    darbibas = Parbaude(klientu_saraksts.klientu_saraksts)
+while True: #izvelne kur lietotājs izvēlās savas darbības
+    klientu_saraksts = Klientu_saraksts() #izveido objektu
+    klientu_saraksts.panem_no()#nolasa no faila katru reizi sāk no jauna, lai būtu jaunākā informācija
+    darbibas = Parbaude(klientu_saraksts.klientu_saraksts) #izveido objektu darbibas
     print("Lūdzu ievadiet savu izvēli (1-4):")
     print("1 - Pierakstīt jaunu klientu")
     print("2 - Pārbaudīt klienta abonementa statusu")
