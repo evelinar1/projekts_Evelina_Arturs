@@ -50,12 +50,12 @@ class Parbaude(Klientu_saraksts):
                             print("Ievadiet 5 ciparu garu kodu!")
                             continue
                         if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
-                            print("Kods netika atrasts ievadiet vēlreiz")
+                            print("Kods netika atrasts abonementu sarakstā ievadiet vēlreiz")
                             continue
                         elif kods in self.klientu_saraksts:
                             break
                     if kods not in self.klientu_saraksts:
-                        J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                        J_N = input(f"Koda nav sarakstā vai esat pārliecināts, ka šis:{kods} ir kods ir pareizais: ")
                         if J_N == 'J':
                             pass
                         elif J_N =="N":
@@ -64,7 +64,7 @@ class Parbaude(Klientu_saraksts):
                     if kods not in self.klientu_saraksts: 
                         print('Klients nav pierakstīts.')
                         while True:
-                            turpinat = input("Vai vēlieties pierakstīt klientu? (J/N): ") 
+                            turpinat = input("Vai klients vēlās pierakstīties? (J/N): ") 
                             if turpinat == 'J': # Ja neeksistējošs klients vēlas iegūt abonementu:
                                 self.pierakstit()
                                 self.saglabat_faila()
@@ -111,17 +111,19 @@ class Parbaude(Klientu_saraksts):
                     print("Ievadiet 5 ciparu garu kodu!")
                     continue
                 if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
-                    print("Kods netika atrasts ievadiet vēlreiz")
+                    print("Kods netika atrasts abonementu sarakstā ievadiet vēlreiz")
                     continue
+                elif kods in self.klientu_saraksts:
+                    break
             if kods not in self.klientu_saraksts:
-                J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                J_N = input(f"Koda nav sarakstā vai esat pārliecināts, ka šis:{kods} ir kods ir pareizais: ")
                 if J_N == 'J':
                     pass
                 elif J_N =="N":
                     print("Lūdzu ievadiet vēlreiz uzmanīgāk")
                     continue
             if kods not in self.klientu_saraksts:
-                turpinat = input("Klientam nav abonements.\nVai vēlaties pierakstīties abonementam? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
+                turpinat = input("Klientam nav abonements.\nVai klients vēlās pierakstīties? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
                 if turpinat == 'J':
                     kods = self.pierakstit()
                     self.saglabat_faila()
@@ -149,10 +151,12 @@ class Parbaude(Klientu_saraksts):
                         print("Ievadiet 5 ciparu garu kodu!")
                         continue
                     if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
-                        print("Kods netika atrasts ievadiet vēlreiz")
+                        print("Kods netika atrasts abonementu sarakstā ievadiet vēlreiz")
                         continue
+                    elif kods in self.klientu_saraksts:
+                        break
                 if kods not in self.klientu_saraksts:
-                    J_N = input(f"Koda nav sarakstā vai šis:{kods} ir ko jūs ierakstijāt: ")
+                    J_N = input(f"Koda nav sarakstā vai esat pārliecināts, ka šis:{kods} ir kods ir pareizais: ")
                     if J_N == 'J':
                         pass
                     elif J_N =="N":
