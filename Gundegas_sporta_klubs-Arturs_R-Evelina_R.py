@@ -34,13 +34,11 @@ class Klientu_saraksts():
                     self.klientu_saraksts[kods]=[klients,termins] #ieliek vārdnīcā
         except FileNotFoundError:
             pass
-
+        
 # Klase "Parbaude", kas manto no klases "Klientu_saraksts"
 class Parbaude(Klientu_saraksts):
     def __init__(self,klientu_saraksts):
         self.klientu_saraksts=klientu_saraksts
-        
-
 # FUNKCIJA PARBAUDIT - Pārbauda klienta abonementa statusu, ja abonements beidzies ir iespēja to pagarināt, vai pierakstīt klientu
     def parbaudit(self):
         while True:
@@ -76,8 +74,7 @@ class Parbaude(Klientu_saraksts):
                             else:
                                 print("Ievadiet atbilstošu vērtību!") # Ierakstīta neatbilstoša vērtība
                             continue
-                        break
-                                
+                        break                
                     else: # Ja klients ir sarakstā
                         termins = self.klientu_saraksts[kods][1]
                         formats = "%d-%m-%Y"
@@ -182,6 +179,7 @@ class Parbaude(Klientu_saraksts):
             except ValueError:
                 print("Ievadiet atbilstošu vērtību!")
                 continue
+
 while True: #izvelne kur lietotājs izvēlās savas darbības
     klientu_saraksts = Klientu_saraksts() #izveido objektu
     klientu_saraksts.panem_no()#nolasa no faila katru reizi sāk no jauna, lai būtu jaunākā informācija
