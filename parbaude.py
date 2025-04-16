@@ -12,10 +12,12 @@ class Klientu_saraksts():
                 break
             else:
                 continue
+        day = 365
+        years = 1
         termins = datetime.now() #paņem tagadējo datumu
-        termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
+        termins = termins + timedelta(days=day*years) #pievieno datumam 1 gadu
         termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
-        self.klientu_saraksts.update({kods:[klients,termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
+        self.klientu_saraksts.update({kods:[klients,termins]}) #pievieno kods kā atslēgu un [klients,termins] ka vērtību
         print(f"{klients} ir pierakstīts abonementam\nkods: {kods}\ntermins līdz: {termins}")
         print("*******************************************************")
         return kods
@@ -29,7 +31,7 @@ class Klientu_saraksts():
                 for rinda in fails: #katru faila rindu split ar :
                     kods,vertiba = rinda.strip().split(':') #iegūst kodu kā key un vērtību kas satur klientu vārdu uzvārdu un termiņu
                     klients,termins = vertiba.strip().split(',')#split ar , un sadala klienta vārdu un uzvārdu un termiņu
-                    self.klientu_saraksts[kods]=[klients,termins] #iliek vārdnīcā
+                    self.klientu_saraksts[kods]=[klients,termins] #ieliek vārdnīcā
         except FileNotFoundError:
             pass
 
@@ -54,7 +56,7 @@ class Parbaude(Klientu_saraksts):
                             continue
                         elif kods in self.klientu_saraksts:
                             break
-                    if kods not in self.klientu_saraksts: # pajautā vai Gundega ir pārlicināta ka ievada kodu pareizi
+                    if kods not in self.klientu_saraksts: # pajautā vai Gundega ir pārliecināta ka ievada kodu pareizi
                         J_N = input(f"Koda nav sarakstā vai esat pārliecināts, ka šis:{kods} ir kods ir pareizais: ")
                         if J_N == 'J':
                             pass
@@ -79,20 +81,22 @@ class Parbaude(Klientu_saraksts):
                     else: # Ja klients ir sarakstā
                         termins = self.klientu_saraksts[kods][1]
                         formats = "%d-%m-%Y"
-                        termins = datetime.strptime(termins, formats) #pārveido terminu uz datetime objektu
+                        termins = datetime.strptime(termins, formats) #pārveido termiņu uz datetime objektu
                         if termins <= datetime.now(): #pārbauda termiņu
                                 # Paziņo, ka abonements beidzies, dod opciju pagarināt to
                             atjaunot = input(f"{self.klientu_saraksts[kods][0]} abonements ir beidzies.\nVai vēlaties atjaunot abonementu? (J/N):")
                             if atjaunot == 'J': # Abonementa pagarināšana
+                                day = 365
+                                years = 1
                                 termins = datetime.now() #paņem tagadējo datumu
-                                termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
+                                termins = termins + timedelta(days=day*years) #pievieno datumam 1 gadu
                                 termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
                                 self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]}) #update dict ar jauno terminu
                                 self.saglabat_faila()
                                 print(f"Klienta {self.klientu_saraksts[kods][0]} abonements tika pagarināts līdz {self.klientu_saraksts[kods][1]}.")
                                 print("*******************************************************")
                                 break
-                            elif atjaunot == 'N': # Abonements netiek pagarināts - programma beidzas
+                            elif atjaunot == 'N': # Abonements netiek pagarināts 
                                 break
                         else:
                             print("Lietotājam ir abonements.")
@@ -122,17 +126,19 @@ class Parbaude(Klientu_saraksts):
                 elif J_N =="N":
                     print("Lūdzu ievadiet vēlreiz uzmanīgāk")
                     continue
-            if kods not in self.klientu_saraksts: #ļauj piwerakstī klientu
+            if kods not in self.klientu_saraksts: #ļauj pierakstī klientu
                 turpinat = input("Klientam nav abonements.\nVai klients vēlās pierakstīties? (J/N): ") # Ja klientam nav abonements, dod iespēju to iegūr 
                 if turpinat == 'J':
                     kods = self.pierakstit()
                     self.saglabat_faila()
                     break
-                elif turpinat == 'N': # Ja neturpina, programma beidzas
+                elif turpinat == 'N': # Abonements netiek izveidots
                     break
             else: 
+                day = 365
+                years = 1
                 termins = datetime.now() #paņem tagadējo datumu
-                termins = termins + timedelta(days=365) #pievieno datumam 1 gadu
+                termins = termins + timedelta(days=day*years) #pievieno datumam 1 gadu
                 termins = termins.strftime("%d-%m-%Y") #pārveido datumu uz pareizo formātu
                 self.klientu_saraksts.update({kods:[self.klientu_saraksts[kods][0],termins]}) #pievieno klientu kā atslēgu un [kods,termins] ka vērtību
                 self.saglabat_faila()
@@ -147,10 +153,10 @@ class Parbaude(Klientu_saraksts):
                 for i in range(0,2):
                     kods = input("Ievadiet klienta 5 ciparu kodu: ")
                     num = int(kods)
-                    if not len(kods) == 5:# Pievienot koda garuma pārbaudi
+                    if not len(kods) == 5:
                         print("Ievadiet 5 ciparu garu kodu!")
                         continue
-                    if kods not in self.klientu_saraksts:# Pārbauda vai klients eksistē
+                    if kods not in self.klientu_saraksts:
                         print("Kods netika atrasts abonementu sarakstā ievadiet vēlreiz")
                         continue
                     elif kods in self.klientu_saraksts:
